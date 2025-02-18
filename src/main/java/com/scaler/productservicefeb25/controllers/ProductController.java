@@ -1,6 +1,7 @@
 package com.scaler.productservicefeb25.controllers;
 
 import com.scaler.productservicefeb25.models.Product;
+import com.scaler.productservicefeb25.services.ProductService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -9,10 +10,17 @@ import java.util.List;
 @RequestMapping("/products")
 public class ProductController {
 
+    private final ProductService productService;
+
+    public ProductController(ProductService productService) {
+        this.productService = productService;
+    }
+
     // http://localhost:8080/products/1 => GET
     @GetMapping("/{id}")
     public Product getProductById(@PathVariable("id") long id) {
-        return null;
+        return productService.getProductById(id);
+        //return null;
     }
 
     // http://localhost:8080/products => GET

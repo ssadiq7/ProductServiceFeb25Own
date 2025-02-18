@@ -1,4 +1,73 @@
 package com.scaler.productservicefeb25.services;
 
-public class FakeStoreProductService {
+import com.scaler.productservicefeb25.dtos.FakeStoreProductDto;
+import com.scaler.productservicefeb25.models.Category;
+import com.scaler.productservicefeb25.models.Product;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+
+import java.util.List;
+
+@Service
+public class FakeStoreProductService implements ProductService {
+    // This service will be used to interact with the FakeStore API
+
+    private final RestTemplate restTemplate;
+
+    public FakeStoreProductService(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+    }
+
+    @Override
+    public Product getProductById(long id) {
+        // This method will fetch the product from the FakeStore API
+        // using the id provided
+        // and return the product
+        // If the product is not found, return null
+        // https://fakestoreapi.com/products/1
+
+        FakeStoreProductDto fakeStoreProductDto = restTemplate.getForObject("https://fakestoreapi.com/products/" + id, FakeStoreProductDto.class);
+
+        if (fakeStoreProductDto == null) {
+            return null;
+        }
+
+        // Convert FakeStoreProductDto to Product
+        return convertFakeStoreProductDtoToProduct(fakeStoreProductDto);
+    }
+
+    private Product convertFakeStoreProductDtoToProduct(FakeStoreProductDto fakeStoreProductDto) {
+        Product product = new Product();
+        product.setId(fakeStoreProductDto.getId());
+        product.setTitle(fakeStoreProductDto.getTitle());
+        product.setImageUrl(fakeStoreProductDto.getImage());
+        product.setDescription(fakeStoreProductDto.getDescription());
+        product.setPrice(fakeStoreProductDto.getPrice());
+
+        Category category = new Category();
+        category.setName(fakeStoreProductDto.getCategory());
+        product.setCategory(category);
+
+        return product;
+    }
+
+    @Override
+    public List<Product> getAllProducts() {
+        return null;
+    }
+
+    @Override
+    public Product createProduct(Product product) {
+        return null;
+    }
+
+    @Override
+    public Product replaceProduct(long id, Product product) {
+        return null;
+    }
+
+    @Override
+    public void deleteProduct(long id) {
+
+    }
 }
