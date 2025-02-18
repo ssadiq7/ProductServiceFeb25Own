@@ -26,7 +26,8 @@ public class ProductController {
     // http://localhost:8080/products => GET
     @GetMapping
     public List<Product> getAllProducts() {
-        return null;
+        return productService.getAllProducts();
+        //return null;
     }
 
     @PostMapping
