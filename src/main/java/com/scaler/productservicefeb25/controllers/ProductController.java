@@ -2,6 +2,8 @@ package com.scaler.productservicefeb25.controllers;
 
 import com.scaler.productservicefeb25.models.Product;
 import com.scaler.productservicefeb25.services.ProductService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,16 +20,29 @@ public class ProductController {
 
     // http://localhost:8080/products/1 => GET
     @GetMapping("/{id}")
-    public Product getProductById(@PathVariable("id") long id) {
-        return productService.getProductById(id);
-        //return null;
+    //public Product getProductById(@PathVariable("id") long id) {
+    public ResponseEntity<Product> getProduct(@PathVariable long id) {
+        //return productService.getProductById(id);
+        Product product = productService.getProductById(id);
+        /*if (product == null) { // This block is the proper way of implementing the response entity return
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(product);*/
+
+        // This block is the shorthand way of implementing the response entity return
+        // Taught in the class
+        return new ResponseEntity<>(
+                product,
+                //HttpStatus.OK
+                //HttpStatus.SERVICE_UNAVAILABLE
+                HttpStatus.NOT_FOUND
+        );
     }
 
     // http://localhost:8080/products => GET
     @GetMapping
     public List<Product> getAllProducts() {
         return productService.getAllProducts();
-        //return null;
     }
 
     @PostMapping
