@@ -1,5 +1,6 @@
 package com.scaler.productservicefeb25.controllers;
 
+import com.scaler.productservicefeb25.exceptions.ProductNotFoundException;
 import com.scaler.productservicefeb25.models.Product;
 import com.scaler.productservicefeb25.services.ProductService;
 import org.springframework.http.HttpStatus;
@@ -46,10 +47,10 @@ public class ProductController {
                     product,
                     HttpStatus.OK
             );
-        } catch (Exception e) {
+        } catch (ProductNotFoundException e) {
             responseEntity = new ResponseEntity<>(
                     null,
-                    HttpStatus.BAD_REQUEST
+                    HttpStatus.NOT_FOUND
             );
         }
 

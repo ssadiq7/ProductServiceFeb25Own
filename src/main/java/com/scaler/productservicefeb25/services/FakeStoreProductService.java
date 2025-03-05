@@ -1,6 +1,7 @@
 package com.scaler.productservicefeb25.services;
 
 import com.scaler.productservicefeb25.dtos.FakeStoreProductDto;
+import com.scaler.productservicefeb25.exceptions.ProductNotFoundException;
 import com.scaler.productservicefeb25.models.Category;
 import com.scaler.productservicefeb25.models.Product;
 import org.springframework.stereotype.Service;
@@ -20,22 +21,25 @@ public class FakeStoreProductService implements ProductService {
     }
 
     @Override
-    public Product getProductById(long id) {
+    public Product getProductById(long productId) throws ProductNotFoundException {
         // This method will fetch the product from the FakeStore API
         // using the id provided
         // and return the product
         // If the product is not found, return null
         // https://fakestoreapi.com/products/1
 
-        FakeStoreProductDto fakeStoreProductDto = restTemplate.getForObject("https://fakestoreapi.com/products/" + id, FakeStoreProductDto.class);
+        FakeStoreProductDto fakeStoreProductDto = restTemplate.getForObject(
+                "https://fakestoreapi.com/products/" + productId,
+                FakeStoreProductDto.class);
 
         if (fakeStoreProductDto == null) {
-            return null;
+            //return null;
+            throw new ProductNotFoundException("Product with id: " + productId + " doesn't exist!");
         }
 
         // Convert FakeStoreProductDto to Product
-        //return convertFakeStoreProductDtoToProduct(fakeStoreProductDto);
-        throw new RuntimeException("This is a runtime exception");
+        return convertFakeStoreProductDtoToProduct(fakeStoreProductDto);
+        //throw new RuntimeException("This is a runtime exception");
     }
 
     private Product convertFakeStoreProductDtoToProduct(FakeStoreProductDto fakeStoreProductDto) {
