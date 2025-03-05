@@ -23,20 +23,46 @@ public class ProductController {
     //public Product getProductById(@PathVariable("id") long id) {
     public ResponseEntity<Product> getProduct(@PathVariable long id) {
         //return productService.getProductById(id);
-        Product product = productService.getProductById(id);
+        //Product product = productService.getProductById(id);
         /*if (product == null) { // This block is the proper way of implementing the response entity return
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(product);*/
 
+        // Exception handling
+        /*try { // Auto generated
+            Product product = productService.getProductById(id);
+            return ResponseEntity.ok(product);
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }*/
+        // What's taught in the class
+        ResponseEntity<Product> responseEntity = null;
+
+        try {
+            Product product = productService.getProductById(id);
+
+            responseEntity = new ResponseEntity<>(
+                    product,
+                    HttpStatus.OK
+            );
+        } catch (Exception e) {
+            responseEntity = new ResponseEntity<>(
+                    null,
+                    HttpStatus.BAD_REQUEST
+            );
+        }
+
+        return responseEntity;
+
         // This block is the shorthand way of implementing the response entity return
         // Taught in the class
-        return new ResponseEntity<>(
+        /*return new ResponseEntity<>(
                 product,
                 //HttpStatus.OK
                 //HttpStatus.SERVICE_UNAVAILABLE
                 HttpStatus.NOT_FOUND
-        );
+        );*/
 
         //throw new RuntimeException("This is a runtime exception");
     }
