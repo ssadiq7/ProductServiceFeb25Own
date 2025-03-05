@@ -35,6 +35,7 @@ public class FakeStoreProductService implements ProductService {
 
         // Convert FakeStoreProductDto to Product
         return convertFakeStoreProductDtoToProduct(fakeStoreProductDto);
+        //throw new RuntimeException("This is a runtime exception");
     }
 
     private Product convertFakeStoreProductDtoToProduct(FakeStoreProductDto fakeStoreProductDto) {

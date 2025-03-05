@@ -37,6 +37,8 @@ public class ProductController {
                 //HttpStatus.SERVICE_UNAVAILABLE
                 HttpStatus.NOT_FOUND
         );
+
+        //throw new RuntimeException("This is a runtime exception");
     }
 
     // http://localhost:8080/products => GET
