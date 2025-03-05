@@ -22,7 +22,8 @@ public class ProductController {
     // http://localhost:8080/products/1 => GET
     @GetMapping("/{id}")
     //public Product getProductById(@PathVariable("id") long id) {
-    public ResponseEntity<Product> getProduct(@PathVariable long id) {
+    //public ResponseEntity<Product> getProduct(@PathVariable long id) {
+    public Product getProductById(@PathVariable("id") long id) throws ProductNotFoundException {
         //return productService.getProductById(id);
         //Product product = productService.getProductById(id);
         /*if (product == null) { // This block is the proper way of implementing the response entity return
@@ -38,23 +39,23 @@ public class ProductController {
             return ResponseEntity.notFound().build();
         }*/
         // What's taught in the class
-        ResponseEntity<Product> responseEntity = null;
+//        ResponseEntity<Product> responseEntity = null;
+//
+//        try {
+//            Product product = productService.getProductById(id);
+//
+//            responseEntity = new ResponseEntity<>(
+//                    product,
+//                    HttpStatus.OK
+//            );
+//        } catch (ProductNotFoundException e) {
+//            responseEntity = new ResponseEntity<>(
+//                    null,
+//                    HttpStatus.NOT_FOUND
+//            );
+//        }
 
-        try {
-            Product product = productService.getProductById(id);
-
-            responseEntity = new ResponseEntity<>(
-                    product,
-                    HttpStatus.OK
-            );
-        } catch (ProductNotFoundException e) {
-            responseEntity = new ResponseEntity<>(
-                    null,
-                    HttpStatus.NOT_FOUND
-            );
-        }
-
-        return responseEntity;
+        return productService.getProductById(id);
 
         // This block is the shorthand way of implementing the response entity return
         // Taught in the class
@@ -86,6 +87,15 @@ public class ProductController {
 
     @DeleteMapping("/{id}")
     public void deleteProduct(@PathVariable("id") long id) {
+    }
+
+
+    @ExceptionHandler(ProductNotFoundException.class)
+    public ResponseEntity<String> handleProductNotFoundException(ProductNotFoundException e) {
+        return new ResponseEntity<>(
+                e.getMessage() + " from controller",
+                HttpStatus.SERVICE_UNAVAILABLE
+        );
     }
 
 }
