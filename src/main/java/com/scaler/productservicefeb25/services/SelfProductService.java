@@ -2,9 +2,13 @@ package com.scaler.productservicefeb25.services;
 
 import com.scaler.productservicefeb25.exceptions.ProductNotFoundException;
 import com.scaler.productservicefeb25.models.Product;
+import org.springframework.context.annotation.Primary;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
+@Primary
 public class SelfProductService implements ProductService {
 
     @Override
