@@ -16,16 +16,16 @@ public class GlobalExceptionHandler {
         );
     }
 
-    @ExceptionHandler(ArrayIndexOutOfBoundsException.class)
-    public void handleArrayIndexOutOfBoundsException() {
-
-    }
-
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<String> handleException(Exception exception) {
-        return new ResponseEntity<String>(
-                "All generic exceptions are handled here: " + exception.getMessage(),
-                HttpStatus.INTERNAL_SERVER_ERROR
-        );
-    }
+//    @ExceptionHandler(ArrayIndexOutOfBoundsException.class)
+//    public void handleArrayIndexOutOfBoundsException() {
+//
+//    }
+//
+//    @ExceptionHandler(Exception.class)
+//    public ResponseEntity<String> handleException(Exception exception) {
+//        return new ResponseEntity<String>(
+//                "All generic exceptions are handled here: " + exception.getMessage(),
+//                HttpStatus.INTERNAL_SERVER_ERROR
+//        );
+//    }
 }

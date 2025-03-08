@@ -6,9 +6,10 @@ import com.scaler.productservicefeb25.models.Product;
 import java.util.List;
 
 public interface ProductService {
-    Product getProductById(long id) throws ProductNotFoundException;
-    List<Product> getAllProducts();
-    Product createProduct(Product product);
-    Product replaceProduct(long id, Product product);
-    void deleteProduct(long id);
+    Product getProductById(long id) throws ProductNotFoundException; // GET mapping
+    List<Product> getAllProducts(); // GET mapping
+    Product createProduct(Product product); // POST mapping
+    Product updateProduct(long id, Product product); // PATCH mapping
+    Product replaceProduct(long id, Product product) throws ProductNotFoundException; // PUT mapping
+    void deleteProduct(long id); // DELETE mapping
 }

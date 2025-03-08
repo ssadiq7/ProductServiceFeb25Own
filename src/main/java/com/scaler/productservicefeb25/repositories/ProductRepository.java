@@ -28,7 +28,9 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     // select * from products;
     
     Product save(Product product);
+    // this is an upsert operation, can be used for both insert and update
     // insert into products values (product);
+    // update products set product = product where id = productId;
     
     void deleteById(Long productId);
     // delete from products where id = productId;

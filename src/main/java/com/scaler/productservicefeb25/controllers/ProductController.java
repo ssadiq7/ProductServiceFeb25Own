@@ -78,12 +78,20 @@ public class ProductController {
 
     @PostMapping
     public Product createProduct(@RequestBody Product product) {
+        return productService.createProduct(product);
+    }
+
+    @PatchMapping
+    public Product updateProduct(@PathVariable("id") long id,
+                                 @RequestBody Product product) {
+        //return productService.updateProduct(product);
         return null;
     }
 
     @PutMapping("/{id}")
-    public Product replaceProduct(@PathVariable("id") long id, @RequestBody Product product) {
-        return null;
+    public Product replaceProduct(@PathVariable("id") long id,
+                                  @RequestBody Product product) throws ProductNotFoundException {
+        return productService.replaceProduct(id, product);
     }
 
     @DeleteMapping("/{id}")
