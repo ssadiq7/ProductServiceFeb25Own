@@ -12,7 +12,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleProductNotFoundException(ProductNotFoundException exception) {
         return new ResponseEntity<>(
                 exception.getMessage(),
-                HttpStatus.BAD_GATEWAY
+                HttpStatus.NOT_FOUND
         );
     }
 
@@ -21,11 +21,11 @@ public class GlobalExceptionHandler {
 //
 //    }
 //
-//    @ExceptionHandler(Exception.class)
-//    public ResponseEntity<String> handleException(Exception exception) {
-//        return new ResponseEntity<String>(
-//                "All generic exceptions are handled here: " + exception.getMessage(),
-//                HttpStatus.INTERNAL_SERVER_ERROR
-//        );
-//    }
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<String> handleException(Exception exception) {
+        return new ResponseEntity<String>(
+                "All generic exceptions are handled here: " + exception.getMessage(),
+                HttpStatus.INTERNAL_SERVER_ERROR
+        );
+    }
 }

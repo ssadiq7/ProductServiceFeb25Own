@@ -95,16 +95,17 @@ public class ProductController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteProduct(@PathVariable("id") long id) {
+    public Product deleteProduct(@PathVariable("id") long id) throws ProductNotFoundException {
+        return productService.deleteProduct(id);
     }
 
 
-    @ExceptionHandler(ProductNotFoundException.class)
+    /*@ExceptionHandler(ProductNotFoundException.class)
     public ResponseEntity<String> handleProductNotFoundException(ProductNotFoundException e) {
         return new ResponseEntity<>(
                 e.getMessage() + " from controller",
                 HttpStatus.SERVICE_UNAVAILABLE
         );
-    }
+    }*/
 
 }

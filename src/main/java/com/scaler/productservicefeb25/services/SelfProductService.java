@@ -5,7 +5,6 @@ import com.scaler.productservicefeb25.models.Category;
 import com.scaler.productservicefeb25.models.Product;
 import com.scaler.productservicefeb25.repositories.CategoryRepository;
 import com.scaler.productservicefeb25.repositories.ProductRepository;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -129,13 +128,39 @@ public class SelfProductService implements ProductService {
         existingProductFromDb.setDescription(product.getDescription());
         existingProductFromDb.setPrice(product.getPrice());
         existingProductFromDb.setImageUrl(product.getImageUrl());
-        existingProductFromDb.setCategory(product.getCategory());
+
+        // Before saving the product in database we should first check if category is in the database or not
+        if(product.getCategory() != null) {
+            Category category = product.getCategory();
+            Optional<Category> optionalCategory = categoryRepository.findByName(category.getName());
+
+            if (optionalCategory.isEmpty()) {
+                // Save the category in the database first
+                category = categoryRepository.save(category);
+            }
+            else {
+                category = optionalCategory.get(); // Get the category from the optional
+            }
+
+            // Set the already available category in the product
+            existingProductFromDb.setCategory(category);
+        }
+        else {
+            existingProductFromDb.setCategory(product.getCategory());
+        }
 
         return productRepository.save(existingProductFromDb);
     }
 
     @Override
-    public void deleteProduct(long id) {
+    public Product deleteProduct(long id) throws ProductNotFoundException {
+        Optional<Product> optionalProduct = productRepository.findById(id);
+
+        if (optionalProduct.isEmpty()) {
+            throw new ProductNotFoundException("Product with id " + id + " not found");
+        }
+
         productRepository.deleteById(id);
+        return optionalProduct.get();
     }
 }

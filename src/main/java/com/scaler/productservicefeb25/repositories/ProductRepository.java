@@ -24,14 +24,17 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     // Wrapping the return type in Optional is a good practice because it forces the developer to handle the null case
     // If the value is not present, isPresent() will return false and get() will throw a NoSuchElementException
 
+    @Override
     List<Product> findAll();
     // select * from products;
-    
+
+    @Override // @Override is optional here but it is a good practice to use it
     Product save(Product product);
     // this is an upsert operation, can be used for both insert and update
     // insert into products values (product);
     // update products set product = product where id = productId;
-    
+
+    @Override // @Override is optional because this is an interface method
     void deleteById(Long productId);
     // delete from products where id = productId;
     

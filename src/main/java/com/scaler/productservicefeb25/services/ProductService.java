@@ -11,5 +11,5 @@ public interface ProductService {
     Product createProduct(Product product); // POST mapping
     Product updateProduct(long id, Product product); // PATCH mapping
     Product replaceProduct(long id, Product product) throws ProductNotFoundException; // PUT mapping
-    void deleteProduct(long id); // DELETE mapping
+    Product deleteProduct(long id) throws ProductNotFoundException; // DELETE mapping
 }
