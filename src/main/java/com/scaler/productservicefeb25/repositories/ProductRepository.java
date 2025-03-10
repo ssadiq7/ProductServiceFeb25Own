@@ -2,7 +2,10 @@ package com.scaler.productservicefeb25.repositories;
 
 import com.scaler.productservicefeb25.models.Category;
 import com.scaler.productservicefeb25.models.Product;
+import com.scaler.productservicefeb25.projections.ProductWithTitleAndPrice;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -54,6 +57,25 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     // and c.category = category;
 
      */
+
+
+
+
+    // select title, price from products where id = productId;
+    // HQL - Hibernate Query Language
+    // JPQL - Java Persistence Query Language
+    // We can write HQL queries based on the entity classes / models and their fields / attributes
+    //@Query("select p.title, p.price from Product p where p.id = :productId") // HQL & JPQL
+    //List<ProductWithTitleAndPrice> findTitleAndPriceById(@Param("productId") Long productId);
+
+
+    // SQL - Structured Query Language | Native Query
+    //@Query(value = "select p.title, p.price from products p where p.id = :productId", nativeQuery = true)
+    //List<ProductWithTitleAndPrice> findTitleAndPriceById(@Param("productId") Long productId);
+
+    // SQL coded by the instructor
+    @Query(value = "select p.title, p.price from products p where p.title = :title and p.price = :price", nativeQuery = true)
+    List<ProductWithTitleAndPrice> getProductTitleAndPriceSQL(@Param("title") String title, @Param("price") double price);
 
     
 }
