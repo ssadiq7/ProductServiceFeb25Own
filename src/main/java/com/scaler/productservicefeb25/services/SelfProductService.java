@@ -85,19 +85,19 @@ public class SelfProductService implements ProductService {
         // Before saving the product in database we should first check if category is in the database or not
         // if category is present then fine, otherwise we should save the category first
         // and then save the product
-        Category category = product.getCategory();
-        Optional<Category> optionalCategory = categoryRepository.findByName(category.getName());
-
-        if (optionalCategory.isEmpty()) {
-            // Save the category in the database first
-            category = categoryRepository.save(category);
-        }
-        else {
-            category = optionalCategory.get(); // Get the category from the optional
-        }
-
-        // Set the already available category in the product
-        product.setCategory(category);
+//        Category category = product.getCategory();
+//        Optional<Category> optionalCategory = categoryRepository.findByName(category.getName());
+//
+//        if (optionalCategory.isEmpty()) {
+//            // Save the category in the database first
+//            category = categoryRepository.save(category);
+//        }
+//        else {
+//            category = optionalCategory.get(); // Get the category from the optional
+//        }
+//
+//        // Set the already available category in the product
+//        product.setCategory(category);
 
         return productRepository.save(product);
         // save() is an upsert operation
